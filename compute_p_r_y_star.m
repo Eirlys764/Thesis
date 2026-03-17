@@ -12,5 +12,5 @@ p_i_star_y = p_i(2, i_star);
 
 cot(gamma) = cos(gamma)/sin(gamma);
 
-p_r_y_star = p_r_y - epsilon/sin(gamma) + ((-1)^(j_star-1))*cot(gamma)*p_i_star_x + p_i_star_y;
+p_r_y_star = p_r_y - epsilon/sin(gamma) + ((-1)^j_star)*cot(gamma)*p_i_star_x + p_i_star_y;
 end

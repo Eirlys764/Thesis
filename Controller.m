@@ -28,18 +28,28 @@ p_r_y_star = compute_p_r_y_star(p_r0, p_i, i_star, j_star, epsilon, gamma);
 
 dt = 0.01;
 duration = 10;
-t = 0: dt: duration;
+t = (0: dt: duration);
+% t = [t_intial, t_final] = [0, 10]; no need to define dt
 
-p_r_y = zeros(size(t));
-e = zeros(size(t));
-p_r_y(1) = p_r0(2);
+% p_r_y = zeros(size(t));
+% e = zeros(size(t));
+% p_r_y(1) = p_r0(2);
+% 
+% for n=1:length(t)-1
+%     e(n) = p_r_y_star - p_r_y(n);
+%     C_r_y = Kp * e(n);
+%     dp_r_y = C_r_y;
+%     p_r_y(n+1) = p_r_y(n) + dp_r_y*dt;
+% end
 
-for n=1:length(t)-1
-    e(n) = p_r_y_star - p_r_y(n);
-    C_r_y = Kp * e(n);
-    dp_r_y = C_r_y;
-    p_r_y(n+1) = p_r_y(n) + dp_r_y*dt;
-end
+% create data types: pack two separate varables p_r_y_star and Kp into one
+% single box called "param.", so that the function can call it up all
+% together
+% Syntax: variableName.fieldName = value;
+param.p_r_y_star = p_r_y_star;
+param.Kp = Kp;
+[t, p_r_y] = ode45(@(t, p_r_y) dyn_static_scenario(t, p_r_y, param), t, p_r0(2));
+
 
 figure;
 subplot(2,1,1);
